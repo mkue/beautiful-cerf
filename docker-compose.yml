@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      FLASK_DEBUG: 1
+    volumes:
+      - ./api/app:/app
+    ports:
+      - 8000:8000
+
+  jupyter:
+    build:
+      context: ./jupyter
+      dockerfile: Dockerfile
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./api/app:/app
+    ports:
+      - 8888:8888
+
+  mlflow:
+    build:
+      context: ./mlflow
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
